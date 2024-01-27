@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>CyclePark</h1>
+<p>An app built for Cyclists by Cyclists</p>
+<script>
+    import LeafletMap from './LeafletMap.svelte';
+  </script>
+  
+  <LeafletMap />
