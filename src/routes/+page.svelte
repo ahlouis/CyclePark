@@ -1,60 +1,60 @@
-<h1>  Roam</h1>
-<p>A perosnalized map for friends.</p>
+<!-- page.svelte -->
+
+<h1>Roam</h1>
+<p>A personalized map for friends.</p>
+
 <script>
-    import LeafletMap from './LeafletMap.svelte';
-    import MapboxComponent from './MapboxMap.svelte'; // Adjust the import path as needed
-    import Sidebar from './Sidebar.svelte'
+  import MapboxMap from './MapboxMap.svelte';
+  import Sidebar from './Sidebar.svelte';
 
-    let isSidebarOpen = false;
-    let selectedOption = '';
+  let markers = [];
 
-    function toggleSidebar() {
-      isSidebarOpen = !isSidebarOpen;
-    }
-
-    function handleOptionSelect(option) {
-    selectedOption = option;
-    isSidebarOpen = false; // Close the sidebar after selecting an option
+  function handleMarkerAdded(event) {
+      markers = [...markers, event.detail];
   }
-  </script>
+
+  // Function to open OpenStreetMap authorization popup
+  function openOSMAuthorizationPopup() {
+        // Define the authorization URL provided by OpenStreetMap
+        const osmAuthorizationURL = 'https://www.openstreetmap.org/oauth/authorize?oauth_token=YOUR_OAUTH_TOKEN&oauth_callback=YOUR_CALLBACK_URL';
+
+        // Open a new window or modal with the authorization URL
+        window.open(osmAuthorizationURL, 'OSM_Authorization', 'width=600,height=400');
+    }
+</script>
+
+<style>
+  /* Styling for the map container */
+  .map-container {
+      position: relative;
+      width: 100%;
+      height: 65vh; /* Adjust height as needed */
+  }
+
+  /* Styling for the sign-in box */
+  .signin-box {
+      position: absolute;
+      bottom: 500px; /* Adjust as needed */
+      right: 10px; /* Adjust as needed */
+      background-color: #ffffff;
+      padding: 10px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+  }
+
   
-  <style>
-    h1 {
-      left: 1;
-      top: 2;
-      left: 10;
-      width: 540px;
-      font-size: 40px;
-      color: skyblue;
-      background-color: #f1f1f1;
-      font-family: "Lucida Console", "Courier New", monospace;
-      font-weight: bold;
-    } 
-    p {
-      
-      top: 5;
-      right: 0;
-      width: 540px;
-      font-size: 20px;
-      color: skyblue;
-      background-color: #f1f1f1;
-      font-family: "Lucida Console", "Courier New", monospace;
-  
-    } 
+</style>
 
-  </style>
+<!-- Map container -->
+<div class="map-container">
+    <!-- MapboxMap component -->
+    <MapboxMap on:markerAdded={handleMarkerAdded} />
+    
+    <!-- Sign-in box -->
+    <div class="signin-box">
+        <button on:click={openOSMAuthorizationPopup}>Sign in</button>
+    </div>
+</div>
 
-<MapboxComponent />
-<button on:click={toggleSidebar}>Places</button>
-
-{#if isSidebarOpen}
-  <Sidebar onOptionSelect={handleOptionSelect} />
-{/if}
-
-{#if selectedOption === 'Places'}
-  <p>Nearby</p>
-{/if}
-
-{#if selectedOption === 'Bucketlist'}
-  <p>My Bucketlist</p>
-{/if}
+<!-- Sidebar component -->
+<Sidebar {markers} />
