@@ -65,11 +65,13 @@
 
 <style>
   #map {
-      height: 720px;
-      width: calc(950px);
+      height: 750px;
+      width: 900px;
       position: fixed;
-      top: 2;
-      right: 0;
+      top: 2px;
+      right: 3px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.16), 0 4px 6px rgba(0,0,0,0.45);
+      border-radius: 10px;
   }
 </style>
 
