@@ -1,3 +1,3 @@
-# Rack finder
-Find great racks in your area!
+# Places
+Find great places with your friends
 
